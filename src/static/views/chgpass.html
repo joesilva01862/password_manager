@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+        <link rel="stylesheet" type="text/css" href="static/styles/styles.css">
+        <script src="static/js/script.js" async></script>
+        <script src="static/js/aes.js" async></script>  
+        <title>Mobile Password Manager</title>
+        <link rel="icon" type="image/png" href="static/img/favicon.png">
+        <meta name="robots" content="noindex" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    </head>
+    
+    <body>
+ 
+        <div class="content">
+        
+            <div class="custom-title">
+                Hardware Based Password Management 
+            </div>
+            
+            <header role="banner">
+                <img class="logo" id="Logo" src="static/img/blueriver-logo.gif" alt="Blue River logo" title="Logo">
+            </header>
+
+            <div class="menubar">
+                <ul>
+                    <li><a id="home" href="/">Home</a></li>
+                    <li><a id="logout" href="logout">Logout</a></li>
+                </ul>
+            </div>
+
+            <div class="dataarea">
+              <div class="center">Change Master Password</div>
+              <div class="passrow">
+                <div class="aright">Current Password:</div>
+                <div class="aleft"><input id="curpassid" type="password" autocomplete="new-password"></input></div>
+              </div>
+              <div class="passrow">
+                 <div class="aright">New Password:</div>
+                 <div class="aleft"> <input id="newpassid" type="password" autocomplete="new-password"></input></div>
+              </div>
+              <div class="passrow">
+                <div class="aright">Repeat New Password:</div>
+                <div class="aleft"> <input id="rptnewpassid" type="password" autocomplete="new-password"></input></div>
+              </div>
+              <div class="passrow">
+                <div class="aright">Password Hint:</div>
+                <div class="aleft"> <input id="passhintid" placeholder="will be displayed at login"></input></div>
+              </div>
+              <div class="center">
+                 <button class="button-div wide" id="chgbtn" onClick="changePassword('chgpass');">Change Master Password</button>
+              </div>   
+            </div>
+
+            </p>
+
+            <div class="dataarea">
+              <div class="center">Change Master Password Hint</div>
+              <div class="passrow">
+                <div class="aright">Current Password:</div>
+                <div class="aleft"><input id="curpasshintid" type="password" autocomplete="new-password"></input></div>
+              </div>
+              <div class="passrow">
+                 <div class="aright">New Password Hint:</div>
+                 <div class="aleft"> <input id="passwordhintid" placeholder="will be displayed at login"></input></div>
+              </div>
+              <div class="center">
+                <button class="button-div wide" id="chgbtn" onClick="changePassHint();">Change Hint</button>
+             </div>   
+           </div>
+
+            <p>
+              
+            <div class="dataarea">
+              <div class="center">Change SSID Password</div>
+              <div class="passrow">
+                  <div class="aright">Current SSID Password:</div>
+                  <div class="aleft"> <input id="curssidpassid" type="password" autocomplete="new-password"></input></div>
+              </div>
+              <div class="passrow">
+                  <div class="aright">New SSID Password:</div>
+                  <div class="aleft"> <input id="newssidpassid" type="password" autocomplete="new-password"></input></div>
+              </div>
+              <div class="passrow">
+                <div class="aright">Repeat New SSID Password:</div>
+                <div class="aleft"><input id="rptnewssidpassid" type="password" autocomplete="new-password"></input></div>
+              </div>
+              <div class="passrow">
+                <div class="aright">SSID Name (optional):</div>
+                <div class="aleft"><input id="newssidid"></input></div>
+              </div>
+              <div class="center">
+                 <button class="button-div wide" id="chgbtn" onClick="changePassword('chgssidpass');">Change SSID Password</button>
+              </div>   
+            </div>
+
+            <footer>
+                Copyright © Blue River Systems
+            </footer>
+
+        </div>
+    </body>
+</html>
+
+
+

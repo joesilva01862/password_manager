@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+        <link rel="stylesheet" type="text/css" href="static/styles/styles.css">
+        <script src="static/js/aes.js"></script>
+        <script src="static/js/script.js"></script>
+        <title>Mobile Password Manager</title>
+        <link rel="icon" type="image/png" href="static/img/favicon.png">
+        <meta name="robots" content="noindex" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    </head>
+    
+    <body>
+ 
+        <div class="content">
+        
+            <div class="custom-title">
+                Hardware Based Password Management 
+            </div>
+            
+            <header role="banner">
+                <img class="logo" id="Logo" src="static/img/blueriver-logo.gif" alt="Blue River logo" title="Logo">
+            </header>
+
+            <div class="menubar">
+                <ul>
+                    <li><a id="home" href="/">Home</a></li>
+                    <li><a id="master" href="changepass">Change Credentials</a></li>
+                    <li><a id="logout" href="logout">Logout</a></li>
+                </ul>
+            </div>
+
+
+            <div class="dataarea">
+                <div class="table-div">
+                    <table id="passtable">
+                        <tr>
+                            <th style="width: 12%;">Id</th>
+                            <th style="width: 73%;">Password</th>
+                            <th style="width: 15%;">Actions</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <p><p><p> 
+
+                <div class="txtwrapper">
+                    <div>
+                       <textarea id="dataarea" name="Text1" rows="5" readonly></textarea>
+                    </div>
+                    <div class="btn-div">
+                       <button id="getkeys" onClick="getKeys();">Get Ids</button>
+                       <button id="keysandvalue" onClick="getKeysAndValues();">Get Passwords</button>
+                    </div>
+                </div>
+
+                <p><p><p>
+
+                <div class="txtwrapper">
+                    <div>
+                       <textarea id="saveinput" name="Text2" rows="7"></textarea>
+                    </div>
+                    
+                    <div class="btn-div">
+                       <button id="savebtn" onClick="postKeysAndValues();">Save Passwords</button>
+                    </div>
+                </div>
+    
+            </div>
+
+            <footer>
+                Copyright © Blue River Systems
+            </footer>
+
+        </div>
+    </body>
+</html>
+

@@ -1,0 +1,6 @@
+{ 
+ "accesspoint" : { 
+   "ap_name": "BlueRiverAP",
+   "ap_password": "12345678"
+ }
+}

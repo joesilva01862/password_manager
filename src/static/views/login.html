@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+        <link rel="stylesheet" type="text/css" href="static/styles/login.css">
+        <title>Mobile Password Manager</title>
+        <link rel="icon" type="image/png" href="static/img/favicon.png">
+        <meta name="robots" content="noindex" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <script src="static/js/aes.js"></script>
+        <script src="static/js/script.js"></script>
+    </head>
+    
+    <body onload="onLoad();">
+        <div class="login-form blue">
+                <div class="pairblock">
+                    <label>User Id</label>
+                    <br>
+                    <input type="text" id="username"/>
+                </div>
+                <p>
+                <div class="pairblock">
+                    <label>Password</label>
+                    <br>
+                    <input type="password" autocomplete="new-password" id='password' />
+                </div>
+
+                <div class="pairblock">
+                    <label style="font-size: 10px;" for="hintBoxId">Hint:</label>  
+                    <input type="checkbox" style="height: 12px;" id="hintBoxId" onclick="hintBoxChecked()">
+                    <p id="hintTextId" style="display:none; font-size: 10px;">
+                </div>
+
+                <div class="button-div">
+                    <button class="login-button" onClick="sendLoginInfo();">Log In</button>
+                </div>
+        </div>
+
+    </body>
+
+</html>

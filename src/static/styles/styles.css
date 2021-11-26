@@ -1,0 +1,244 @@
+:root {
+  --default-radius: 10px;
+  --block-color: #ffcc99;
+  --margin-left: 10px;
+  --margin-right: 10px;
+}
+
+body {
+  font-size: 14px;
+  background: lemonchiffon;
+  font-family: 'Sans Serif';
+}
+
+.content {
+  margin: 4px;
+}
+
+.table-div {
+  width: auto;
+  height: 180px;
+  overflow-y: auto;
+  border: 1px solid #293d3d;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  /*font-family: 'Sans Serif';*/
+  font-size: 12px;
+  color: #293d3d;
+}
+
+th, td {
+  height: 12px;
+  text-align: left;
+  padding-left: 8px; 
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}
+
+th {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.tablebtn {
+  width: 50px;
+  height: 18px;
+  border-radius: 2px;
+  margin: 1px;
+  border: none;
+  color: white;
+  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.greenbtn {
+  background-color: #4CAF50;
+}
+
+.redbtn {
+  background-color: #cc3300;
+}
+
+.txtwrapper {
+  margin-right: 9px;
+}
+
+textarea {
+  width: 100%;
+}
+
+.menubar {
+/*  background: skyblue; */
+  background: var(--block-color);
+  border-radius: var(--default-radius);
+  font-size: 22px;
+}
+
+.menubar ul {
+  color: #fff;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  list-style: none;
+}
+
+.menubar ul li a {
+  display: block;
+  margin: 6px;
+  padding-left: 8px;
+  color: #997300;
+}
+
+.menubar ul li a:hover {
+  background: white; 
+  /*color: darkslateblue;*/
+  color: #997300;
+  margin: 6px;
+  border-radius: 4px;
+  padding-left: 8px;
+}
+
+
+.custom-title {
+  width: auto;
+  overflow: auto; /* makes div expand vertically to accomodate content */
+/*    height: 220px;       to center vertically */
+/*    line-height: 220px;  to center vertically */
+  border-radius: 10px;
+  background: goldenrod;
+  color: white;
+  text-align: center;
+  font-size: 36px;
+}
+
+.login-form {
+  width: 700px;
+  height: 560px; 
+  padding: 20px;
+  /* margin-left: 20px; */
+  border-radius: 10px;
+  background: pink;
+  font-size: 0.7em;
+}
+
+.dataarea {
+  width: auto;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--block-color);
+  /*font-size: 0.4em;*/
+}
+ 
+.passchange {
+  font-size: 16px;
+  text-align: right;
+}
+
+.passrow {
+  margin: 3px;
+  font-size: 14px;
+  width: 100%;
+  padding: 5px;
+}
+
+.aright{
+  display: inline-block;
+  width: 47%;
+  text-align: right;
+}
+
+.aleft{
+    display: inline-block;
+    text-align: left;
+}
+
+.button-div {
+  width: auto; /* makes div to expand to ocupy 100% of parent */
+  /* text-align: center; center the button inside */
+}
+
+.btn-div {
+  margin-top: 3px;
+}
+
+.login-button {
+  width: 300px;
+}
+
+button {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  width: 160px;
+  height: 30px;
+}
+
+.button-div {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  height: 30px;
+}
+
+.short {
+  width: 160px;
+}
+
+.wide {
+  width: 190px;
+}
+
+header {
+  width: auto;
+  overflow: auto;
+  text-align: center;
+  padding-top: 20px;
+  padding-left: 20px;
+  /*border-bottom: 1px solid gray;*/
+}
+
+header .logo {
+  width: 50%;
+  height: 50%;
+}
+
+header .title{
+  color: black;
+/*    font-size: 50px; */
+  padding: 10px;
+}
+
+.center {
+  padding-bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+}
+
+footer {
+  padding: 1px;
+  color: rgb(8, 182, 235);
+  clear: left;
+  text-align: center;
+  font-size: 10px;
+}
+
+@media (max-width: 768px) {
+  .content {
+    width: 100%;
+  }
+  
+  button {
+    width: 160px;
+    height: 36px;
+  }
+  
+}
