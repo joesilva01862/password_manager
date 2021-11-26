@@ -1,3 +1,6 @@
+'''
+    Hardware based password management system.
+'''
 import ure as re
 import ulogging as logging
 import ujson
@@ -53,7 +56,7 @@ def get_byte_array(str):
 def encrypt_text(passw, text):
     key = get_byte_array(passw) 
     aes = mpyaes.new(key, mpyaes.MODE_CBC, enciv)
-    barray = aes.encrypt(text)              # mpyaes.AES.encrypt([bytes, str]) returns a bytearray
+    barray = aes.encrypt(text)              
     return barray
 
 def decrypt_bytes(passw, barray):
@@ -96,7 +99,7 @@ def save_data(filename, data):
     with open(filename, 'w') as f:
         f.write(data)
 
-def on_led_timer(timer):                # we will receive the timer object when being called
+def on_led_timer(timer):                
     if activity == True:
        led.toggle()      
 
@@ -163,32 +166,6 @@ def get_login():
 #-------------------------------------------
 # HTTP request handlers
 #-------------------------------------------
-'''
-@app.route("/setenckey", methods=['POST'])
-def index(req):
-    # here take the steps to save the encryption key
-    global enckey
-    enckey = ubinascii.a2b_base64(bytes(req.body))
-    encoded_iv = ubinascii.b2a_base64(bytes(IV))
-    encoded_iv = encoded_iv[:-1]
-    status = 'success'
-    user = {'status' : status}
-    keys = {'user':user}
-    return ujson.dumps(keys)
-
-@app.route("/test")
-def test(req):
-    enckey = '12345678'
-    barray = get_byte_array(enckey)
-    global IV
-    text = encrypt_text(enckey, 'this is my text')
-    encodediv = ubinascii.b2a_base64(bytes(IV))
-    encodedtxt = ubinascii.b2a_base64(bytes(text))
-    enckey64 = ubinascii.b2a_base64(bytes(barray))
-    keys = {'key':enckey64, 'ivtext':encodediv, 'text':encodedtxt}
-    return ujson.dumps(keys) 
-'''
-
 @app.route("/listkey")
 def listkey(req):
     json = read_data(ENCRYPT_FILE)
@@ -261,45 +238,6 @@ def login(req):
     user = {'status' : 'success'}
     keys = {'user':user}
     return ujson.dumps(keys)
-
-'''
-@app.route("/login", methods=['GET', 'POST'])
-def login(req):
-    global loggedin
-    global MASTER_USER
-    global MASTER_PASSWORD
-    global IP_ADDRESS
-
-    if loggedin:
-        return send_file('static/views/index.html')
-    
-    if req.method == "GET":
-        return send_file('static/views/login.html')
-    
-#    json_body = decode_and_decrypt(req.body)
-#    user = json_body['login']['username']
-#    passw = json_body['login']['password']
-    userx = 'admin'
-    passwx = '12345678'
-    text = decrypt_file2text(passwx, MASTER_FILE)
-
-    if text == 'ERROR':
-        return send_file('static/views/login.html')
-
-    json = ujson.loads(text)
-
-    if userx != json['master']['username'] or passwx != json['master']['password']:
-        return send_file('static/views/login.html')
-        
-    loggedin = True
-    MASTER_USER = json['master']['username']
-    MASTER_PASSWORD = json['master']['password']
-    IP_ADDRESS, port = req.client_addr
-    user = {'status' : 'success'}
-    keys = {'user':user}
-    return ujson.dumps(keys)
-'''
-
 
 @app.route("/getkeys")
 def get_keys(req):
@@ -530,8 +468,10 @@ def change_ssid_pass(req):
         user = {'status' : 'error'}
         return ujson.dumps({'user' : user})
         
-    json = {"ap_name" : jsdata['password']['newSSID'], "ap_password" : jsdata['password']['new'] }
-    save_data( SSID_FILE, ujson.dumps({"accesspoint" : json}) )
+    json = read_data(SSID_FILE)    
+    json['accesspoint']['ap_name']     = jsdata['password']['newSSID']
+    json['accesspoint']['ap_password'] = jsdata['password']['new']
+    save_data( SSID_FILE, ujson.dumps(json) )
     AP_PASSWORD = jsdata['password']['new']
     user = {'status' : 'success'}
     return ujson.dumps({'user' : user})
@@ -553,6 +493,7 @@ def get_image(request, img):
 @app.get("/static/js/<file>")
 def get_script(request, file):
     return send_file('static/js/' + file)
+
 
 # this will create the files if not found
 init()

@@ -1,6 +1,7 @@
 { 
  "accesspoint" : { 
    "ap_name": "BlueRiverAP",
-   "ap_password": "12345678"
+   "ap_password": "12345678",
+   "hint" : "not yet set, please change"
  }
 }

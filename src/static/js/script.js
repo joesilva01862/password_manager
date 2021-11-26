@@ -136,7 +136,6 @@ function postKeysAndValues() {
         
          alert('Data successfully saved on the device.');
          document.getElementById("saveinput").value = '';
-         console.log('return value from server: ' + request.status);
       }
   }
    
@@ -178,13 +177,10 @@ function decrypt(enc_text) {
 function encrypt(plain_text) {
     var enckey = atob(localStorage.getItem('enckey'));
     var iv     = atob(localStorage.getItem('iv'));
-    console.log('enckey: ['+enckey+']');
-    console.log('iv: ['+iv+']');
     var parsedKey = CryptoJS.enc.Utf8.parse(enckey);
     var parsedIv = CryptoJS.enc.Utf8.parse(iv)
     var encrypted = CryptoJS.AES.encrypt(plain_text, parsedKey, { iv: parsedIv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});
     encryptedStr = encrypted.toString();
-    console.log('encrypted',encryptedStr );
     return encryptedStr;
 }
 
@@ -259,7 +255,6 @@ function getCookie(name) {
 function onLoad() {
     document.getElementById("hintBoxId").checked = false;
     var hint = getCookie('hintText');
-    console.log('hint: '+hint);
     document.getElementById('hintTextId').innerHTML = hint;
 }
 
@@ -428,7 +423,6 @@ function sendLoginInfo() {
     // { "login": { "username":"John", "password":"bla bla bla"} }
     var text = '{ "login" : { "username" : "' + login.username + '", "password" : "' + login.password + '" } }'; 
     var enc_text = encrypt(text);
-    console.log('enc object: '+enc_text);
     request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
     request.send(enc_text);
 
