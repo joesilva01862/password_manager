@@ -141,33 +141,11 @@ function postKeysAndValues() {
    
 }
 
-/*
-// take base64 string, decrypt it, and return plain text
-function decrypt(enc_text) {
-    //var decoded_text = CryptoJS.enc.Base64.parse(enc_text);
-    var decoded_key = atob(localStorage.getItem('enckey'));
-    var decoded_iv  = atob(localStorage.getItem('iv'));
-
-    var decrypted = CryptoJS.AES.decrypt(
-        enc_text,
-        decoded_key,
-      {
-        iv: decoded_iv,
-        mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7
-      }
-    );
-
-    plain_text = decrypted.toString(CryptoJS.enc.Utf8);
-    return plain_text;
-}
-*/
-
 function decrypt(enc_text) {
     var decoded_key = atob(localStorage.getItem('enckey'));
     var decoded_iv  = atob(localStorage.getItem('iv'));
+    var key = CryptoJS.enc.Utf8.parse(decoded_key);
     var iv = CryptoJS.enc.Utf8.parse(decoded_iv);
-    key = CryptoJS.enc.Utf8.parse(decoded_key);
     var decrypted =  CryptoJS.AES.decrypt(enc_text, key, { iv: iv, mode: CryptoJS.mode.CBC});
     return decrypted.toString(CryptoJS.enc.Utf8); 
 }
@@ -381,10 +359,11 @@ function changePassword(url) {
 }
 
 function setEncryptionKey() {
+    // get plain text from screen, then base64 encoded it
     var enckey = window.btoa(document.getElementById('enckey_id').value.trim());    
-    var iv     = 'QkJCQkJCQkJCQkJCQkJCQg==' // BBBBBBBBBBBBBBBB;    
+    // store the base64 encoded enckey and iv
     localStorage.setItem('enckey', enckey);
-    localStorage.setItem('iv', iv);
+    localStorage.setItem('iv', 'Q0FEQUNBRkVCRUVGREVEQQ==');
     var request = new XMLHttpRequest()
     request.open('GET', 'http://192.168.4.1/setenckey');
     request.send();
