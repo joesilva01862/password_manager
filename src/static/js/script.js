@@ -275,86 +275,81 @@ function changePassHint() {
 }
 
 function changePassword(url) {
-  var request = new XMLHttpRequest()
-  request.open('POST', 'http://192.168.4.1/' + url)
-  var curPass;
-  var newPass;
-  var rptNewPass;
-  var passHint = '';
-  var ssidName = '';
+    var request = new XMLHttpRequest()
+    request.open('POST', 'http://192.168.4.1/' + url)
+    var curPass;
+    var newPass;
+    var rptNewPass;
+    var passHint = '';
+    var ssidName = '';
 
-  if (url == 'chgpass') {
-      curPass = document.getElementById('curpassid').value.trim();
-      newPass = document.getElementById('newpassid').value.trim();
-      rptNewPass = document.getElementById('rptnewpassid').value.trim();
-      passHint = document.getElementById('passhintid').value.trim();
-  }
-  else {
-      curPass = document.getElementById('curssidpassid').value.trim();
-      newPass = document.getElementById('newssidpassid').value.trim();
-      rptNewPass = document.getElementById('rptnewssidpassid').value.trim();
-      ssidName = document.getElementById('newssidid').value.trim();
-  }
+    if (url == 'chgpass') {
+        curPass = document.getElementById('curpassid').value.trim();
+        newPass = document.getElementById('newpassid').value.trim();
+        rptNewPass = document.getElementById('rptnewpassid').value.trim();
+        passHint = document.getElementById('passhintid').value.trim();
+    }
+    else {
+        curPass = document.getElementById('curssidpassid').value.trim();
+        newPass = document.getElementById('newssidpassid').value.trim();
+        rptNewPass = document.getElementById('rptnewssidpassid').value.trim();
+        ssidName = document.getElementById('newssidid').value.trim();
+    }
 
-  if (newPass != rptNewPass) {
-      alert('New Password and Repeat New Password fields don\'t match.');
-      return;
-  }
+    if (newPass != rptNewPass) {
+        alert('New Password and Repeat New Password fields don\'t match.');
+        return;
+    }
 
-  if (curPass === '' || newPass === '') {
-      alert('Neither current password nor new password can be blank');
-      return;
-  }
+    if (curPass === '' || newPass === '') {
+        alert('Neither current password nor new password can be blank');
+        return;
+    }
 
-  if ( newPass.length < 8) {
-    alert('Password must have at least 8 characters');
-    return; 
-  }
+    if ( newPass.length < 8) {
+        alert('Password must have at least 8 characters');
+        return; 
+    }
 
-  if (url == 'chgssidpass' && ssidName === '') {
-      alert('SSID name cannot be blank');
-      return;
-  }
+    if (url == 'chgpass' && passHint === '') {
+        alert('Hint text cannot be blank');
+        return;
+    }
 
-  if (url == 'chgpass' && passHint === '') {
-    alert('Hint text cannot be blank');
-    return;
-  }
+    var password = new Object();
+    password.current = curPass;
+    password.new = newPass;
+    password.hint = passHint;
+    password.newSSID = ssidName;
 
-  var password = new Object();
-  password.current = curPass;
-  password.new = newPass;
-  password.hint = passHint;
-  password.newSSID = ssidName;
+    json = '{ "password": ' + JSON.stringify(password) + '}';
+    var enc_text = encrypt(json);
+    request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+    request.send(enc_text);
+    
+    request.onload = function () {
+        if (request.status == 200) {
+            var json = JSON.parse(this.response);
+            if (json.user.status == 'loggedout') {
+                document.location.href = '/login';
+                return;
+            }
+            
+            if (json.user.status == 'error') {
+                alert('Master password doesn\'t match.');
+                return;
+            }
+            
+            alert('Password has succesfully changed.');
 
-  json = '{ "password": ' + JSON.stringify(password) + '}';
-  var enc_text = encrypt(json);
-  request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-  request.send(enc_text);
- 
-  request.onload = function () {
-      if (request.status == 200) {
-         var json = JSON.parse(this.response);
-         if (json.user.status == 'loggedout') {
-            document.location.href = '/login';
-            return;
-         }
-          
-         if (json.user.status == 'error') {
-            alert('Current password doesn\'t match.');
-            return;
-         }
-         
-         alert('Password has succesfully changed.');
-
-         if (url === 'chgpass') {
-             document.location.href = '/login';
-         }
-         else {
-             document.location.href = '/';
-        }    
-      }
-  }
+            if (url === 'chgpass') {
+                document.location.href = '/login';
+            }
+            else {
+                document.location.href = '/';
+            }    
+        }
+    }
 
 }
 
