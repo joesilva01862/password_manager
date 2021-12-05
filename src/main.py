@@ -189,6 +189,12 @@ def index(req):
 
     return get_login()
 
+
+@app.route("/initial")
+def index(req):
+    return send_file('static/views/initial.html')
+
+
 @app.route("/setenckey")
 def setenckey(req):
     global enckey_set
@@ -464,13 +470,17 @@ def change_ssid_pass(req):
     bodytext = decode_and_decrypt(enckey, req.body)
     jsdata = ujson.loads(bodytext)
 
-    if jsdata['password']['current'] !=  AP_PASSWORD:
+    if jsdata['password']['current'] !=  MASTER_PASSWORD:
         user = {'status' : 'error'}
         return ujson.dumps({'user' : user})
-        
+
     json = read_data(SSID_FILE)    
-    json['accesspoint']['ap_name']     = jsdata['password']['newSSID']
     json['accesspoint']['ap_password'] = jsdata['password']['new']
+
+    # changing SSID name is optional
+    if jsdata['password']['newSSID']:
+        json['accesspoint']['ap_name'] = jsdata['password']['newSSID']
+
     save_data( SSID_FILE, ujson.dumps(json) )
     AP_PASSWORD = jsdata['password']['new']
     user = {'status' : 'success'}

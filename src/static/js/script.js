@@ -380,6 +380,7 @@ function setEncryptionKey() {
 function sendLoginInfo() {
     if (!localStorage.getItem('enckey') || !localStorage.getItem('iv')) {
         alert('The encryption key procedure needs to be done first.');
+        document.location.href = '/initial';
         return;
     }
 
