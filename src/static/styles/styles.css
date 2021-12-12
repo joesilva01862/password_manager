@@ -1,6 +1,7 @@
 :root {
   --default-radius: 10px;
   --block-color: #ffcc99;
+  --golden-color: goldenrod;
   --margin-left: 10px;
   --margin-right: 10px;
 }
@@ -14,6 +15,23 @@ body {
 .content {
   margin: 4px;
 }
+
+.flex-container {
+  display: flex;
+  text-align: center;
+  margin: 10px;
+}
+
+.flex-child-1 {
+  flex: 1;
+  text-align: right;
+}  
+
+.flex-child-2 {
+  flex: 1;
+  text-align: left;
+  line-height: 44px;
+}  
 
 .table-div {
   width: auto;
@@ -115,10 +133,10 @@ textarea {
 /*    height: 220px;       to center vertically */
 /*    line-height: 220px;  to center vertically */
   border-radius: 10px;
-  background: goldenrod;
+  background: var(--block-color);
   color: white;
   text-align: center;
-  font-size: 36px;
+  font-size: 48px;
 }
 
 .login-form {

@@ -6,6 +6,7 @@ import ulogging as logging
 import ujson
 import sys
 import os
+import esp
 import utime
 import network
 import ubinascii
@@ -163,22 +164,34 @@ def get_login():
     resp.set_cookie('hintText', json['accesspoint']['hint'])
     return resp
 
+
+def calc_disk_size(dir, size, folders_c, files_c):
+    try:
+        names = os.listdir(dir)
+    except:
+        size += os.stat(dir)[6]
+        files_c += 1
+        return size, folders_c, files_c 
+      
+    for name in names:
+        try:
+            os.listdir(name)
+            if dir == "/":
+                folder = name
+                path = "/"+name
+            else:    
+                folder = dir + "/" + name
+                path = dir + "/" + name
+            size, folders_c, files_c = calc_disk_size(path, size, folders_c+1, files_c)     
+        except:
+            size, folders_c, files_c = calc_disk_size(dir+"/"+name, size, folders_c, files_c)     
+
+    return size, folders_c, files_c 
+    
+
 #-------------------------------------------
 # HTTP request handlers
 #-------------------------------------------
-@app.route("/listkey")
-def listkey(req):
-    json = read_data(ENCRYPT_FILE)
-    status = 'success'
-
-    # now set all json vars
-    data = {'status' : status, 'enckey': enckey, 'enciv':enciv, 'set':enckey_set, 
-            'enckey_file':json['encryption']['enckey'],
-            'iv_file':json['encryption']['iv']
-           }
-    retdata = {'data':data}
-    return ujson.dumps(retdata)
-
 @app.route("/")
 def index(req):
     if not enckey_set:
@@ -491,7 +504,37 @@ def logout(req):
     global loggedin
     loggedin = False
     return send_file('static/views/logout.html')
-   
+
+@app.route("/listkey")
+def listkey(req):
+    json = read_data(ENCRYPT_FILE)
+    status = 'success'
+
+    # now set all json vars
+    data = {'status' : status, 'enckey': enckey, 'enciv':enciv, 'set':enckey_set, 
+            'enckey_file':json['encryption']['enckey'],
+            'iv_file':json['encryption']['iv']
+           }
+    retdata = {'data':data}
+    return ujson.dumps(retdata)
+
+@app.route("/getsizes")
+def get_sizes(req):
+    used_size, folders_c, files_c = calc_disk_size("/", 0, 0, 0)
+    fs_size = esp.flash_size()
+    data = {
+        'status' : 'success',
+        'fs_size' : fs_size, 
+        'file_count' : files_c, 
+        'folder_count' : folders_c, 
+        'used_space' : used_size, 
+        'avail_space' : fs_size - used_size,
+        'avail_percent' : int(100 - ( (used_size / fs_size) * 100 ))
+    }
+    retdata = {'data':data}
+    return( ujson.dumps(retdata) )
+
+# required by the webserver
 @app.get("/static/styles/<file>")
 def get_style(request, file):
     return send_file('static/styles/' + file)
